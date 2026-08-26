@@ -1,3 +1,9 @@
+//loosely type language
+
+let price="10";
+let price2 =10;
+
+console.log(price+price2);
 
 // 1:-creating an array using array liiteral
 
