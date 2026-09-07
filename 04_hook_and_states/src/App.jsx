@@ -1,6 +1,6 @@
 
 import State from "./state_and_hooks/01_state";
-import state2 from "./state_and_hooks/02_state";
+import State2 from "./state_and_hooks/02_state";
 
 const App = ()=>{
 
@@ -8,7 +8,7 @@ const App = ()=>{
       <>
       
     {/* <State/> */}
-      <state2/>
+      <State2/>
       </>
     )
 }

@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const state2 = () => {
+const State2 = () => {
 
     const [count, setCount] = useState(0);
 
@@ -12,15 +12,15 @@ const state2 = () => {
         <>
             <h1>count value:{count}</h1>
 
-            <button onClick={() => {
+            <button onClick={() => { 
                 handleIncrement();
                 handleIncrement();
                 handleIncrement();
                 handleIncrement();
                 handleIncrement();
-            }}></button>
+            }}>Incress</button>
         </>
     )
 }
 
-export default state2
+export default State2;
