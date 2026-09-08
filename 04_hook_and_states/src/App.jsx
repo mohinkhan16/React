@@ -1,6 +1,8 @@
 
 import State from "./state_and_hooks/01_state";
 import State2 from "./state_and_hooks/02_state";
+import  PrevState from "./state_and_hooks/03_prestate";
+
 
 const App = ()=>{
 
@@ -8,7 +10,8 @@ const App = ()=>{
       <>
       
     {/* <State/> */}
-      <State2/>
+      {/* <State2/> */}
+      <PrevState/>
       </>
     )
 }
