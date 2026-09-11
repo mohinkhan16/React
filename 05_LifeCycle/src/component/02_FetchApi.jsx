@@ -25,7 +25,7 @@ const User = () => {
             <th>ID</th>
             <th>Name</th>
             <th>Email</th>
-            <th>Username</th>
+            <th>phone</th>
           </tr>
         </thead>
 
@@ -35,7 +35,7 @@ const User = () => {
               <td>{u.id}</td>
               <td>{u.name}</td>
               <td>{u.email}</td>
-              <td>{u.username}</td>
+              <td>{u.phone}</td>
             </tr>
           ))}
         </tbody>
