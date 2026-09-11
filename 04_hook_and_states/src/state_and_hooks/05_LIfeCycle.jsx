@@ -11,7 +11,7 @@ const LifeCycle =()=>{
 
     // This use for refresh data like a you can add name they remove a password and other details
         // setFromData({
-        //     ...FormData,
+        //     ...FormData, 
         //     [name]:value
         // });
 
