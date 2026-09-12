@@ -65,7 +65,7 @@ const State_01 =()=>{
         {/* <button onClick={(e)=>handleClick(e)}>increase</button> */}
         
          {/* 
-              4. WRONG ❌
+              4. WRONG 
               handleClick() yaha immediately execute ho jayega,
               button click hone ka wait nahi karega.
               Isliye event handler mein normally () nahi lagate.
