@@ -7,6 +7,7 @@ import Conditional_02 from "./conditional/02_Conditional"
 import Props from "./components/01_Props"
 import Uncontrolled from "./components/02_Uncontrollerd_component"
 import Controllered from "./components/03_Controllered_Component"
+import Validation from "./components/04_Vaidation"
 const App =()=>{
   return(
     <>
@@ -21,7 +22,9 @@ const App =()=>{
 
     {/* <Uncontrolled/> */}
 
-    <Controllered/>
+    {/* <Controllered/> */}
+
+    <Validation/>
     </>
   )
 }
