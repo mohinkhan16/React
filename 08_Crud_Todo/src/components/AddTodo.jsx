@@ -1,53 +1,60 @@
-
 import React, { useState } from "react";
 
-const AddTodo = ()=>{
-    const [input,setInput]=useState({
-        task:"",
-        description:""
+const AddTodo = ({ handleAdd }) => {
+    const [input, setInput] = useState({
+        task: "",
+        description: ""
     });
 
-    const handleChange =(feild,e)=>{
-        setInput((prev)=>{
-            return{
+    const handleChange = (field, e) => {
+        setInput((prev) => {
+            return {
                 ...prev,
-                [feild]:e.target.value,
+                [field]: e.target.value,
             };
         });
     };
 
-    console.log("input",input);
-    
-
-    const handleSubmit =(e)=>{
+    const handleSubmit = (e) => {
         e.preventDefault();
 
-        setInput({task:"",description:""});
+        console.log("Final Input:", input);
+
+        handleAdd(input);
+
+        setInput({
+            task: "",
+            description: ""
+        });
     };
 
-    return(
+    return (
         <>
-        <form onSubmit={handleSubmit}>
-        <input type="text"
-        placeholder="Enter your task"
-        value={input.task}
-        onChange={(e)=>handleChange("task",e)} />
+            <form onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    placeholder="Enter your task"
+                    value={input.task}
+                    onChange={(e) => handleChange("task", e)}
+                />
 
-        <br/>
-        <br/>
+                <br />
+                <br />
 
-        <input type="text"
-        placeholder="Enter your description"
-        value={input.description}
-        onChange={(e)=>handleChange("description",e)} />
+                <input
+                    type="text"
+                    placeholder="Enter your description"
+                    value={input.description}
+                    onChange={(e) => handleChange("description", e)}
+                />
 
-        <br/>
-        <br/>
+                <br />
+                <br />
 
-        <button type="submit">Click</button>
-        </form>
+                <button type="submit">Click</button>
+            </form>
         </>
-    )
-}
+    );
+};
 
 export default AddTodo;
