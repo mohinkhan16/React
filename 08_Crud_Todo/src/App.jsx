@@ -18,12 +18,23 @@ const App = () => {
 
   const [todos, setTodos] = useState(Alltodo);
 
+  const [editvalue,setEditvalue] = useState(null);
+
   const handleAdd = (input) => {
     if (!input.task || !input.description) {
       alert("Please enter both details");
       return;
-    }
+    }else if(editvalue){
+      setTodos((todo)=>
+        todo.map((t)=>
+          t.id === editvalue.id
+          ? {task:input.task , description:input.description}
+          :t,
+        )
+      );
+      setEditvalue(null)
 
+    }else{ 
     const newTodo = {
       id: new Date().getTime(),
       task: input.task,
@@ -31,13 +42,24 @@ const App = () => {
     };
 
     setTodos((prev) => [...prev, newTodo]);
-  };
+    }  };
 
+  const handledelete =(id)=>{
+    setTodos(todos.filter((t)=>t.id !==id));
+  }
+
+  const handleEdit =(id)=>{
+    const todo = todos.find((t)=>t.id === id);
+
+    setEditvalue(todo)
+  }
   return (
     <>
-      <AddTodo handleAdd={handleAdd} />
+      <AddTodo handleAdd={handleAdd}   editValue={editvalue}/>
 
-      <ListTodo todos={todos} />
+      <ListTodo todos={todos} 
+      handledelete={handledelete}
+      handleEdit={handleEdit}/>
     </>
   );
 };
