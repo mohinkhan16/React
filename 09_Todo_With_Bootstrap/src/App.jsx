@@ -22,7 +22,6 @@ const App = () => {
   const [todos, setTodos] = useState(Alltodo);
   const [editvalue, setEditvalue] = useState(null);
 
-  // Add / Update Todo
   const handleAdd = (input) => {
     if (!input.task || !input.description) {
       alert("Please enter both details");
@@ -55,12 +54,10 @@ const App = () => {
     }
   };
 
-  // Delete Todo
   const handledelete = (id) => {
     setTodos(todos.filter((t) => t.id !== id));
   };
 
-  // Edit Todo
   const handleEdit = (id) => {
     const todo = todos.find((t) => t.id === id);
     setEditvalue(todo);
@@ -80,7 +77,7 @@ const App = () => {
     );
   };
 
-  // Statistics
+//task total calculation
   const totalTasks = todos.length;
 
   const completedTasks = todos.filter(
@@ -98,11 +95,10 @@ const App = () => {
         editValue={editvalue}
       />
 
-      {/* Summary Cards */}
+    
       <div className="container mt-4">
         <div className="row g-3">
 
-          {/* Total */}
           <div className="col-md-4">
             <div className="card shadow-sm border-0">
               <div className="card-body text-center">
@@ -117,7 +113,6 @@ const App = () => {
             </div>
           </div>
 
-          {/* Completed */}
           <div className="col-md-4">
             <div className="card shadow-sm border-0">
               <div className="card-body text-center">
@@ -132,7 +127,6 @@ const App = () => {
             </div>
           </div>
 
-          {/* Pending */}
           <div className="col-md-4">
             <div className="card shadow-sm border-0">
               <div className="card-body text-center">

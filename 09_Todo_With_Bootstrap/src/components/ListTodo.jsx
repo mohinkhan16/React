@@ -53,7 +53,6 @@ const ListTodo = ({
                       />
                     </td>
 
-                    {/* Task */}
                     <td
                       style={{
                         textDecoration: t.completed
@@ -67,7 +66,6 @@ const ListTodo = ({
                       {t.task}
                     </td>
 
-                    {/* Description */}
                     <td
                       style={{
                         textDecoration: t.completed
@@ -81,7 +79,6 @@ const ListTodo = ({
                       {t.description}
                     </td>
 
-                    {/* Actions */}
                     <td>
                       <button
                         className="btn btn-danger btn-sm me-2"
