@@ -10,6 +10,7 @@ const ListTodo = ({ todos,handledelete,handleEdit }) => {
         <thead>
           <tr>
             <th>ID</th>
+            <th>Src</th>
             <th>Task</th>
             <th>Description</th>
             <th colSpan={2}>Action</th>
@@ -21,6 +22,11 @@ const ListTodo = ({ todos,handledelete,handleEdit }) => {
             return (
               <tr key={t.id}>
                 <td>{index + 1}</td>
+                <td>
+                  <input type="checkbox"
+                  checked={t.completed}
+                  onChange={()=>handleComplete(t.id)} />
+                </td>
                 <td>{t.task}</td>
                 <td>{t.description}</td>
                 <td><button onClick={()=>handledelete(t.id)}>delete </button>

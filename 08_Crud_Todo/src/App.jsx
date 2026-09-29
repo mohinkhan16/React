@@ -8,11 +8,13 @@ const App = () => {
       id: 1,
       task: "Playing",
       description: "you have playing cricket everyday",
+      completed:false,
     },
     {
       id: 2,
       task: "Learn",
       description: "you have learn new new things daily",
+      completed:false,
     },
   ];
 
@@ -52,7 +54,20 @@ const App = () => {
     const todo = todos.find((t)=>t.id === id);
 
     setEditvalue(todo)
-  }
+  };
+
+  const handleComplete = (id) => {
+    setTodos((todos) =>
+      todos.map((t) =>
+        t.id === id
+          ? {
+              ...t,
+              completed: !t.completed,
+            }
+          : t
+      )
+    );
+  };
   return (
     <>
       <AddTodo handleAdd={handleAdd}   editValue={editvalue}/>
