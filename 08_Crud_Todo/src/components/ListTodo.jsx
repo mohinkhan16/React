@@ -1,7 +1,7 @@
 import React from "react";
 import "./ListTodo.css"
 
-const ListTodo = ({ todos,handledelete,handleEdit }) => {
+const ListTodo = ({ todos,handledelete,handleEdit,handleComplete }) => {
   return (
     <div className="todo-container">
       <h2>My Todo List</h2>

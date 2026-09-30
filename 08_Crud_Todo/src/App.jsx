@@ -30,7 +30,7 @@ const App = () => {
       setTodos((todo)=>
         todo.map((t)=>
           t.id === editvalue.id
-          ? {task:input.task , description:input.description}
+          ? { ...t ,task:input.task , description:input.description}
           :t,
         )
       );
@@ -41,6 +41,7 @@ const App = () => {
       id: new Date().getTime(),
       task: input.task,
       description: input.description,
+      completed:false
     };
 
     setTodos((prev) => [...prev, newTodo]);
@@ -74,7 +75,8 @@ const App = () => {
 
       <ListTodo todos={todos} 
       handledelete={handledelete}
-      handleEdit={handleEdit}/>
+      handleEdit={handleEdit}
+      handleComplete={handleComplete}/>
     </>
   );
 };
