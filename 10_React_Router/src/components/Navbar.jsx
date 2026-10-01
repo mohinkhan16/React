@@ -1,12 +1,38 @@
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import { NavLink } from "react-router-dom";
 
+function WebNavbar() {
+  return (
+    <>
+      <Navbar bg="dark" data-bs-theme="dark">
+        <Container>
+          <Navbar.Brand as={NavLink} to="/">
+            Fashion Point
+          </Navbar.Brand>
 
+          <Nav className="me-auto">
+            <Nav.Link as={NavLink} to="/">
+              Home
+            </Nav.Link>
 
-import React from "react";
+            <Nav.Link as={NavLink} to="/about">
+              About
+            </Nav.Link>
 
-const Navbar = ()=>{
-    return(
-        <h1>This is Navbar</h1>
-    )
+            <Nav.Link as={NavLink} to="/products">
+              Products
+            </Nav.Link>
+
+            <Nav.Link as={NavLink} to="/contact">
+              Contact
+            </Nav.Link>
+          </Nav>
+        </Container>
+      </Navbar>
+    </>
+  );
 }
 
-export default Navbar
+export default WebNavbar;
