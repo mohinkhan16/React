@@ -3,6 +3,7 @@ import AddExpense from "./components/AddExpenses";
 import { expenseContext } from "./context/ExpenseContext";
 import ExpenseStats from "./components/ExpenseState";
 import ExpensFrom from "./components/ExpenseFrom";
+import Counter from "./concept/Counter";
 
 const App = () => {
     const { expenseList } = useContext(expenseContext);
@@ -18,6 +19,7 @@ const App = () => {
             <ExpenseStats/>
             <br />
             <ExpensFrom/>
+            <Counter/>
         </>
     );
 };
