@@ -1,75 +1,124 @@
-import React, { useContext, useState } from "react";
-import ExpenseContext from "../context/ExpenseContext";
-import ExpenseList from "./ExpensesList";
 
-const ExpensFrom =()=>{
-    const {}=useContext(ExpenseContext);
+import { useContext, useState } from "react";
+import { expenseContext } from "../context/ExpenseContext";
 
-    const [expenseQuery,setexpenseQuery]=useState({
-        Title:"",
-        ExpenseType:"all",
-        Category:"all",
-        sortBy:"asc",
+const ExpensFrom = () => {
+  const {
+    expenseList,
+    editVal,
+    handleEdit,
+    handleDelete,
+  } = useContext(expenseContext);
+
+  const [expenseQuery, setexpenseQuery] = useState({
+    Title: "",
+    ExpenseType: "all",
+    Category: "all",
+    sortBy: "asc",
+  });
+
+  // Handle input changes
+  const handleChange = (field, e) => {
+    setexpenseQuery((prev) => ({
+      ...prev,
+      [field]: e.target.value,
+    }));
+  };
+
+  // Handle search form submit
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Query:", expenseQuery);
+  };
+
+  // Reset all filters
+  const handleReset = () => {
+    setexpenseQuery({
+      Title: "",
+      ExpenseType: "all",
+      Category: "all",
+      sortBy: "asc",
     });
+  };
 
-    const handleChange=(e)=>{
-        e.prevenDefault();
-
-        console.log("query",expenseQuery);
-        
-    };
-
-    const handleReset =()=>{
-        setexpenseQuery({
-            Title:'',
-            ExpenseType:"all",
-            Category:"all",
-            sortBy:"asc",
-        });
-    };
-    const filterList = expenseList
-    .filter((l) =>
-      l.Title.toLowerCase().includes(expenseQuery.Title.toLowerCase()),
+  // Filter and sort expenses
+  const filterList = expenseList
+    .filter((item) =>
+      item.Title.toLowerCase().includes(
+        expenseQuery.Title.toLowerCase()
+      )
     )
-    .filter((l) =>
+    .filter((item) =>
       expenseQuery.ExpenseType === "all"
         ? true
-        : l.ExpenseType === expenseQuery.ExpenseType,
-    ).filter((l) => expenseQuery.Category === "all" ? true : l.Category === expenseQuery.Category)
+        : item.ExpenseType === expenseQuery.ExpenseType
+    )
+    .filter((item) =>
+      expenseQuery.Category === "all"
+        ? true
+        : item.Category === expenseQuery.Category
+    )
+    .sort((a, b) => {
+      if (expenseQuery.sortBy === "asc") {
+        return a.Title.localeCompare(b.Title);
+      }
+
+      if (expenseQuery.sortBy === "desc") {
+        return b.Title.localeCompare(a.Title);
+      }
+
+      if (expenseQuery.sortBy === "moneyAsc") {
+        return a.Amount - b.Amount;
+      }
+
+      if (expenseQuery.sortBy === "moneyDesc") {
+        return b.Amount - a.Amount;
+      }
+
+      return 0;
+    });
+
   return (
     <>
+      <h2>Expense Search & Filter</h2>
+
       <form onSubmit={handleSubmit}>
-        <label htmlFor="">Title</label>
+        <label htmlFor="title">Title</label>
         <input
+          id="title"
           type="text"
-          placeholder="enter title"
+          placeholder="Enter title"
           value={expenseQuery.Title}
           onChange={(e) => handleChange("Title", e)}
         />
 
-        <label htmlFor="">Expense Type</label>
+        <br />
+        <br />
 
+        <label htmlFor="expenseType">Expense Type</label>
         <select
-          name=""
-          id=""
+          id="expenseType"
           value={expenseQuery.ExpenseType}
           onChange={(e) => handleChange("ExpenseType", e)}
         >
-          <option value="all">select</option>
+          <option value="all">All Types</option>
           <option value="Credit">Credit</option>
           <option value="Debit">Debit</option>
         </select>
 
-        <label htmlFor="Category">Category</label>
+        <br />
+        <br />
+
+        <label htmlFor="category">Category</label>
         <select
-          name=""
-          id=""
+          id="category"
           value={expenseQuery.Category}
           onChange={(e) => handleChange("Category", e)}
         >
-          <option value="all">Select</option>
+          <option value="all">All Categories</option>
           <option value="Money Transfer">Money Transfer</option>
           <option value="Cash Withdrawal">Cash Withdrawal</option>
+          <option value="General Expenses">General Expenses</option>
           <option value="General Expense">General Expense</option>
           <option value="Food&Dining">Food&Dining</option>
           <option value="HealthCare">HealthCare</option>
@@ -77,30 +126,35 @@ const ExpensFrom =()=>{
           <option value="Travel">Travel</option>
         </select>
 
-        <label htmlFor="sortBy">sortby</label>
+        <br />
+        <br />
 
+        <label htmlFor="sortBy">Sort By</label>
         <select
+          id="sortBy"
           value={expenseQuery.sortBy}
           onChange={(e) => handleChange("sortBy", e)}
         >
-          <option value="all">Select</option>
-          <option value="asc">Ascending</option>
-          <option value="desc">Descending</option>
-          <option value="moneyAsc">Money Ascending</option>
-          <option value="moneyDesc">Money Descending</option>
+          <option value="asc">Title: A to Z</option>
+          <option value="desc">Title: Z to A</option>
+          <option value="moneyAsc">Amount: Low to High</option>
+          <option value="moneyDesc">Amount: High to Low</option>
         </select>
 
-        <button type="submit">search</button>
+        <br />
+        <br />
 
-        <button onClick={handleReset}>
-          Clear all filter
+        <button type="submit">Search</button>{" "}
+        <button type="button" onClick={handleReset}>
+          Clear All Filters
         </button>
       </form>
 
       <br />
-      <br />
 
-      <table border={2}>
+      <p>Total Expenses Found: {filterList.length}</p>
+
+      <table border="1" cellPadding="8">
         <thead>
           <tr>
             <th>ID</th>
@@ -109,35 +163,55 @@ const ExpensFrom =()=>{
             <th>Amount</th>
             <th>Date</th>
             <th>Category</th>
-            <th>ExpenseType</th>
-            <th colSpan={2}>Action</th>
+            <th>Expense Type</th>
+            <th colSpan="2">Actions</th>
           </tr>
         </thead>
 
         <tbody>
-          {filterList.map((t, index) => {
-            return (
-              <tr key={t.id}>
+          {filterList.length > 0 ? (
+            filterList.map((item, index) => (
+              <tr key={item.id}>
                 <td>{index + 1}</td>
-                <td>{t.Title}</td>
-                <td>{t.Description}</td>
-                <td>{t.Amount}</td>
-                <td>{t.Date}</td>
-                <td>{t.Category}</td>
-                <td>{t.ExpenseType}</td>
+                <td>{item.Title}</td>
+                <td>{item.Description}</td>
+                <td>{item.Amount}</td>
+                <td>{item.Date}</td>
+                <td>{item.Category}</td>
+                <td>{item.ExpenseType}</td>
+
                 <td>
-                  <button onClick={() => handleEdit(t.id)}>Edit</button>
+                  <button
+                    type="button"
+                    onClick={() => handleEdit(item.id)}
+                  >
+                    Edit
+                  </button>
                 </td>
+
                 <td>
-                  <button onClick={() => handleDelete(t.id)}>Delete</button>
+                  <button
+                    type="button"
+                    onClick={() => handleDelete(item.id)}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
-            );
-          })}
+            ))
+          ) : (
+            <tr>
+              <td colSpan="9">No expenses found.</td>
+            </tr>
+          )}
         </tbody>
       </table>
+
+      {editVal && (
+        <p>Editing expense: {editVal.Title}</p>
+      )}
     </>
   );
 };
 
-export default ExpenseList;
+export default ExpensFrom;

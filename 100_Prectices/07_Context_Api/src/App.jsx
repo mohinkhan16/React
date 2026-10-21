@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import AddExpense from "./components/AddExpenses";
-import ExpensesList from "./components/ExpensesList";
 import { expenseContext } from "./context/ExpenseContext";
 import ExpenseStats from "./components/ExpenseState";
+import ExpensFrom from "./components/ExpenseFrom";
 
 const App = () => {
     const { expenseList } = useContext(expenseContext);
@@ -14,10 +14,10 @@ const App = () => {
             <AddExpense />
             <br />
             <br />
-            <br />
-            <ExpensesList />
             <br/>
             <ExpenseStats/>
+            <br />
+            <ExpensFrom/>
         </>
     );
 };

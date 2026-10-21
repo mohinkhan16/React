@@ -16,7 +16,7 @@ const ExpenseStats = () => {
     const balance = Credit - Debit;
 
     return (
-        <div>
+        <div className="stats">
             <h2>Credit: ₹{Credit}</h2>
             <h2>Debit: ₹{Debit}</h2>
             <h2>Balance: ₹{balance}</h2>
