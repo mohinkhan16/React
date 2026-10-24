@@ -21,7 +21,16 @@ const initialValues =[
         Date:"18-01-2024",
         Category:"For knowledge",
         Type:"debit",
-    }
+    },
+     {
+        id:3,
+        Title:"Event",
+        Description:"Fun",
+        Amount:5000,
+        Date:"20-01-2024",
+        Category:"Wedding event",
+        Type:"credit",
+    },
 ];
 
 const expenseContextProvider =({Children})=>{
