@@ -31,6 +31,10 @@ const Counter = ()=>{
     <button onClick={handleIncrement}>
         Increment By Number
     </button>
+
+      <button onClick={() => dispatch(customDecrement(number))}>
+        custom decrement
+      </button>
     </>;
 } 
 
