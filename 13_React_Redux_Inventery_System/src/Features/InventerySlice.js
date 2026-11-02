@@ -4,6 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     products: [
         {
+            id:1,
             name: "phone",
             qty: 1,
             price: 2000,
@@ -27,9 +28,17 @@ const inventrySlice = createSlice({
 
             console.log("Product List", [...state.products]);
         },
+
+        handleDetele:(state,action)=>{
+            state.products=state.products.filter((p)=>p.id !== action.payload)
+        },
+
+        setEditval :(state,action)=>{
+                state.editvalue=action.payload
+        }
     },
 });
 
-export const { add } = inventrySlice.actions;
+export const { add,handleDetele,setEditval } = inventrySlice.actions;
 
 export default inventrySlice.reducer;

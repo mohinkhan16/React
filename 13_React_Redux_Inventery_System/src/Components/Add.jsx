@@ -1,15 +1,23 @@
 
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { add } from "../Features/InventerySlice";
 
 const Add = () => {
+
     const [input, setInput] = useState({
         name: "",
-        qty: "",
-        price: "",
+        qty: 0,
+        price: 0,
         category: "",
     });
+    const {editvalue}=useSelector((state)=>state.inventory);
+
+    useEffect (()=>{
+        if(editvalue){
+            setInput(editvalue);
+        }
+    },[editvalue])
 
     const dispatch = useDispatch();
 
@@ -22,6 +30,8 @@ const Add = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+    
 
         if (!input.name || !input.qty || !input.price || !input.category) {
             alert("Please fill all fields");
