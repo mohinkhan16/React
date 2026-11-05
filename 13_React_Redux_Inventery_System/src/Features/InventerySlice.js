@@ -38,41 +38,6 @@ products: [
         price: 12000,
         category: "electronic",
     },
-    {
-        id: "product-6",
-        name: "headphones",
-        qty: 12,
-        price: 2500,
-        category: "accessories",
-    },
-    {
-        id: "product-7",
-        name: "chair",
-        qty: 7,
-        price: 4500,
-        category: "furniture",
-    },
-    {
-        id: "product-8",
-        name: "table",
-        qty: 4,
-        price: 8000,
-        category: "furniture",
-    },
-    {
-        id: "product-9",
-        name: "printer",
-        qty: 6,
-        price: 15000,
-        category: "electronic",
-    },
-    {
-        id: "product-10",
-        name: "webcam",
-        qty: 9,
-        price: 3500,
-        category: "accessories",
-    },
     ],
     editValue: null,
 };
@@ -82,7 +47,7 @@ const inventrySlice = createSlice({
     initialState,
 
     reducers: {
-        // Add Product
+        
         add: (state, action) => {
             const newProduct = {
                 id: nanoid(),
@@ -92,19 +57,16 @@ const inventrySlice = createSlice({
             state.products.push(newProduct);
         },
 
-        // Delete Product
         handleDetele: (state, action) => {
             state.products = state.products.filter(
                 (p) => p.id !== action.payload
             );
         },
 
-        // Set Edit Value
         setEditval: (state, action) => {
             state.editValue = action.payload;
         },
 
-        // Update Product
         handleEdit: (state, action) => {
             const index = state.products.findIndex(
                 (p) => p.id === action.payload.id

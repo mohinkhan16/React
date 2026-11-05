@@ -18,7 +18,7 @@ const Add = () => {
         category: "",
     });
 
-    // Fill form when Edit button is clicked
+
     useEffect(() => {
         if (editValue) {
             setInput({
@@ -30,7 +30,7 @@ const Add = () => {
         }
     }, [editValue]);
 
-    // Handle Input Change
+
     const handleChange = (field, e) => {
         setInput((prev) => ({
             ...prev,
@@ -38,7 +38,6 @@ const Add = () => {
         }));
     };
 
-    // Handle Submit
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -67,7 +66,6 @@ const Add = () => {
             dispatch(add(productData));
         }
 
-        // Reset Form
         setInput({
             name: "",
             qty: "",

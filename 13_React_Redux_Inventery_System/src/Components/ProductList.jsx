@@ -7,33 +7,60 @@ import {
 } from "../Features/InventerySlice";
 
 const ProductList = () => {
+
   const product = useSelector(
     (state) => state.inventory.products
   );
+
+  const dispatch = useDispatch();
 
   const [productQuery, setProductQuery] = useState({
     search: "",
     sort: "asc",
   });
 
-  const dispatch = useDispatch();
-
   const handleChange = (field, e) => {
-    setProductQuery((prod) => {
-      return {
-        ...prod,
-        [field]: e.target.value,
-      };
+    setProductQuery((prod) => ({
+      ...prod,
+      [field]: e.target.value,
+    }));
+  };
+
+
+  const handleReset = () => {
+    setProductQuery({
+      search: "",
+      sort: "asc",
     });
   };
 
-  // Searching
-  const filterList = product.filter((p) =>
-    p.name.toLowerCase().includes(productQuery.search.toLowerCase()),
+  const totalPrice = product.reduce(
+    (total, p) =>
+      total + Number(p.qty) * Number(p.price),
+    0
   );
 
-  // Sorting
+  const totalStock = product.reduce(
+    (total, p) => total + Number(p.qty),
+    0
+  );
+
+  const highStock = product.filter(
+    (p) => Number(p.qty) > 10
+  );
+
+  const lowStock = product.filter(
+    (p) => Number(p.qty) <= 10
+  );
+
+  const filterList = product.filter((p) =>
+    p.name.toLowerCase().includes(
+      productQuery.search.toLowerCase()
+    )
+  );
+
   const sortedList = [...filterList].sort((a, b) => {
+
     if (productQuery.sort === "asc") {
       return Number(a.id) - Number(b.id);
     }
@@ -63,16 +90,39 @@ const ProductList = () => {
 
   return (
     <>
+      <h2>Inventory Dashboard</h2>
+
+      {/* Dashboard */}
+      <div>
+
+        <h3>Total Price: ₹{totalPrice}</h3>
+
+        <h3>Total Stock: {totalStock}</h3>
+
+        <h3>High Stock: {highStock.length}</h3>
+
+        <h3>Low Stock: {lowStock.length}</h3>
+
+      </div>
+
+      <hr />
+
+      <h2>Product List</h2>
+
       <input
         type="text"
         value={productQuery.search}
-        placeholder="enter product name"
-        onChange={(e) => handleChange("search", e)}
+        placeholder="Enter product name"
+        onChange={(e) =>
+          handleChange("search", e)
+        }
       />
 
       <select
         value={productQuery.sort}
-        onChange={(e) => handleChange("sort", e)}
+        onChange={(e) =>
+          handleChange("sort", e)
+        }
       >
         <option value="asc">Ascending</option>
         <option value="desc">Descending</option>
@@ -82,8 +132,17 @@ const ProductList = () => {
         <option value="QtyDesc">Quantity Descending</option>
       </select>
 
+      <button
+        type="button"
+        onClick={handleReset}
+      >
+        Reset
+      </button>
+
       {sortedList.length > 0 ? (
-        <table border={1}>
+
+        <table border={1} cellPadding={5}>
+
           <thead>
             <tr>
               <th>Id</th>
@@ -97,16 +156,20 @@ const ProductList = () => {
 
           <tbody>
             {sortedList.map((p, index) => (
+
               <tr key={p.id}>
+
                 <td>{index + 1}</td>
                 <td>{p.name}</td>
                 <td>{p.qty}</td>
-                <td>{p.price}</td>
+                <td>₹{p.price}</td>
                 <td>{p.category}</td>
 
                 <td>
                   <button
-                    onClick={() => dispatch(setEditval(p))}
+                    onClick={() =>
+                      dispatch(setEditval(p))
+                    }
                   >
                     Edit
                   </button>
@@ -114,18 +177,27 @@ const ProductList = () => {
 
                 <td>
                   <button
-                    onClick={() => dispatch(handleDetele(p.id))}
+                    onClick={() =>
+                      dispatch(handleDetele(p.id))
+                    }
                   >
                     Delete
                   </button>
                 </td>
+
               </tr>
+
             ))}
           </tbody>
+
         </table>
+
       ) : (
-        <h1>No Products Data found</h1>
+
+        <h3>No Products Data Found</h3>
+
       )}
+
     </>
   );
 };
