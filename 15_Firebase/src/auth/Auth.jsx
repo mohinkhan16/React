@@ -1,61 +1,109 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { Container, Row, Col, Card, Button, Form } from "react-bootstrap";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
+import { auth, googleProvider } from "../config/firebase";
 
 const Auth = () => {
+  const [isLogin, setIsLogin] = useState(true);
 
-    const [authData, setAuthData] = useState({
-        email: "",
-        password: ""
+  const [authData, setAuthData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [user, setUser] = useState("");
+
+  const handleChange = (field, e) => {
+    setAuthData((prev) => {
+      return {
+        ...prev,
+        [field]: e.target.value,
+      };
     });
+  };
 
-    const [isSignup, setIsSignup] = useState(false);
+  console.log("authdata", authData);
 
-    const handleChange = (field, e) => {
-        setAuthData((prev) => ({
-            ...prev,
-            [field]: e.target.value
-        }));
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(authData);
-    };
+    if (isLogin) {
+      const result = await signInWithEmailAndPassword(
+        auth,
+        authData.email,
+        authData.password,
+      );
 
-    return (
-        <form onSubmit={handleSubmit}>
-            <h1>{isSignup ? "Sign Up" : "Login"}</h1>
+      setUser(result.user.email);
+    } else {
+      const result = await createUserWithEmailAndPassword(
+        auth,
+        authData.email,
+        authData.password,
+      );
 
-            <input
-                type="email"
-                placeholder="Enter Email"
-                value={authData.email}
-                onChange={(e) => handleChange("email", e)}
-            />
-            <br />
-            <br />
+      setUser(result.user.email);
+    }
+  };
 
-            <input
-                type="password"
-                placeholder="Enter Password"
-                value={authData.password}
-                onChange={(e) => handleChange("password", e)}
-            />
-            <br />
+  const handleGoogleLogin = async () => {
+    const result = await signInWithPopup(auth, googleProvider);
 
-            <button type="submit">
-                {isSignup ? "Sign Up" : "Login"}
-            </button>
+    setUser(result.user.email);
+  };
 
-        <br />
-        <br />
-            <button
-                type="button"
-                onClick={() => setIsSignup(!isSignup)}
+  return (
+    <>
+      <Container>
+        <Row>
+          <Col>
+            <Form
+              className="d-flex justify-content-center align-items-center"
+              style={{ height: "100vh" }}
+              onSubmit={handleSubmit}
             >
-                {isSignup ? "Already User? Login" : "New User? Sign Up"}
-            </button>
-        </form>
-    );
+              <Card style={{ width: "30%" }} className="p-3 gap-3">
+                <h1 className="text-center">{isLogin ? "Login" : "Sign up"}</h1>
+                <h5>{user}</h5>
+                <Form.Group>
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="enter your email"
+                    value={authData.email}
+                    onChange={(e) => handleChange("email", e)}
+                  ></Form.Control>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="enter your password"
+                    value={authData.password}
+                    onChange={(e) => handleChange("password", e)}
+                  ></Form.Control>
+                </Form.Group>
+                <Button variant="success" type="submit">
+                  {isLogin ? "Login" : "Sign up"}
+                </Button>
+                <Button onClick={() => setIsLogin(!isLogin)}>
+                  {isLogin ? "new user ? Sign up" : "already user"}{" "}
+                </Button>
+
+                <Button variant="warning" onClick={handleGoogleLogin}>
+                  Login with Google
+                </Button>
+              </Card>
+            </Form>
+          </Col>
+        </Row>
+      </Container>
+    </>
+  );
 };
 
 export default Auth;
